@@ -20,9 +20,9 @@ class JobsRepository {
 
   // create
   Future<void> addJob(
-          {required UserID uid,
-          required String name,
-          required int ratePerHour}) =>
+      {required UserID uid,
+        required String name,
+        required int ratePerHour}) =>
       _firestore.collection(jobsPath(uid)).add({
         'name': name,
         'ratePerHour': ratePerHour,
@@ -53,10 +53,10 @@ class JobsRepository {
       _firestore
           .doc(jobPath(uid, jobId))
           .withConverter<Job>(
-            fromFirestore: (snapshot, _) =>
-                Job.fromMap(snapshot.data()!, snapshot.id),
-            toFirestore: (job, _) => job.toMap(),
-          )
+        fromFirestore: (snapshot, _) =>
+            Job.fromMap(snapshot.data()!, snapshot.id),
+        toFirestore: (job, _) => job.toMap(),
+      )
           .snapshots()
           .map((snapshot) => snapshot.data()!);
 
@@ -66,10 +66,10 @@ class JobsRepository {
 
   Query<Job> queryJobs({required UserID uid}) =>
       _firestore.collection(jobsPath(uid)).withConverter(
-            fromFirestore: (snapshot, _) =>
-                Job.fromMap(snapshot.data()!, snapshot.id),
-            toFirestore: (job, _) => job.toMap(),
-          );
+        fromFirestore: (snapshot, _) =>
+            Job.fromMap(snapshot.data()!, snapshot.id),
+        toFirestore: (job, _) => job.toMap(),
+      );
 
   Future<List<Job>> fetchJobs({required UserID uid}) async {
     final jobs = await queryJobs(uid: uid).get();
